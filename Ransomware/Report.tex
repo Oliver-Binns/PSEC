@@ -1,0 +1,97 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage[nottoc,numbib]{tocbibind}
+\usepackage[a4paper, total={6in, 8in}]{geometry}
+\usepackage{subcaption}
+\usepackage{titling}
+\newcommand{\subtitle}[1]{%
+  \posttitle{%
+    \par\end{center}
+    \begin{center}\large#1\end{center}
+    \vskip0.5em}%
+}
+\newcommand{\myparagraph}[1]{\paragraph{#1}\mbox{}\\}
+
+\title{Topics in Privacy \& Security}
+\subtitle{Ransomware}
+\author{Y1481702}
+\date{\today}
+\setlength\parindent{0pt}
+ 
+\begin{document}
+\begin{titlepage}
+\maketitle
+\tableofcontents
+\end{titlepage}
+
+%In answering each part of the question, consider the level of IT expertise of the personnel that your answer is aimed at, and the security mechanisms they are able to implement.
+%Your answer to this question must not exceed six A4 pages (minimum font size 11pt) plus references.
+
+%APPROX ONE PAGE PER 10 MARKS:
+
+\section{Technical Report}% 30 Marks
+%Write a technical report the organisation's IT managers about the structure of ransomware attacts, about the dangers these attacks post to healthcare providers, and about the prevention, detection and response mechanisms they should implement on the organisation's computers to best protect them against such attacks.
+
+%WannaCry, NotPetya
+
+%structure of ransomware:
+
+%dangers they present- healthcare providers:
+%medical data is sensitive and confidential
+%might prove damaging to many people if released
+
+
+more prevalent as more devices become dependent on complex software and IOT
+
+-McAfee Labs 2018:
+"cyber sabotage and disruption of organisations"
+profit is the key driver of ransomware: criminals aim to make money from inconveniencing a user
+%unscrupulous competitors or criminals (protection racket)
+
+criminals will focus on:
+inconvenience and disruption through dos rather than malicious fatal damage
+specifically those who can AFFORD to pay to quickly recover from the attack
+
+Rise of untraceable cryptocurrencies allows easy money laundering 
+
+%ransomware as a distraction from other attacks- data theft
+
+%talk about surveys:
+-Cyber Security Breaches Survey 2017
+
+%prevention, detection and response mechanisms:
+regular (offline) back ups
+while regular backups must be kept as a last resort, prevention and detection is preferable as recovery from a backup may take considerable amounts of time for large data AND aiming to stop access to data
+
+
+%--look into projects such as NoMoreRansom and Cyber Threat Alliance
+
+\section{Email}
+\subsection{Memo}% 20 Marks
+%Write a memo that the IT managers should email to healthcare personnel who are not IT experts, to warn them about ransomware, to inform them about ways to prevent ransomware attacks, and to advise them what to do if they are affected by such an attack. The memo must only cover the personnel’s use of computers belonging to the organisation and located on the organisation’s premises.
+
+%get attention- users need to be aware of the danger:
+%WannaCry brought the NHS to a standstill
+
+%suitable analogy?
+
+
+\subsection{Justification}% 10 Marks
+%Write a justification for the information included in the memo from part (ii) of the question, and for how you organised this information. The aim of this justification is to convince the IT managers that the memo they will send is going to be effective.
+
+%information included
+%how it is organised
+
+refer to BS EN ISO standards
+relate this to the technical report in previous section
+
+As analogy has been used to help the users relate to the explanation
+
+\newpage
+\raggedright
+\bibliography{Report}{}
+\bibliographystyle{ieeetran}
+\newpage
+\section{Appendix}
+
+\end{document}
