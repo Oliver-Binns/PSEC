@@ -30,18 +30,27 @@
 %APPROX ONE PAGE PER 10 MARKS:
 
 \section{Technical Report}% 30 Marks
+\subsection{Introduction}
 %Write a technical report the organisation's IT managers about the structure of ransomware attacts, about the dangers these attacks post to healthcare providers, and about the prevention, detection and response mechanisms they should implement on the organisation's computers to best protect them against such attacks.
 
-%WannaCry, NotPetya
+2017 saw a significant rise in frequency of ransomware attacks[cite], with WannaCry\cite{wannacry_reuters, wannacry_bbc} and NotPetya\cite{petya_independent} being two particularly damaging examples.
+These attacks becoming more prevalent is likely driven by the rise of untraceable cryptocurrencies (such as bitcoin) which allows easy money laundering
+as more devices become dependent on complex software and IOT
+
+ 
+
+Ransomware FALLS under the category of a VIRUS as it is self-multiplying and can infect the host program (i.e. OS, documents, etc.)
 
 %structure of ransomware:
+The main aim of ransomware is for users to be denied access to services that are so vital they will pay to avoid the inconvenience that this lack of access causes.
+This violates the security goal of availability
+%DOES THIS HAVE ANY HEALTHCARE SPECIFIC PROBLEMS?
+For obvious reasons, timely access to medical data may be the difference between life and death for some patients.
 
-%dangers they present- healthcare providers:
-%medical data is sensitive and confidential
-%might prove damaging to many people if released
+As with other criminal ransom acts, there is absolutely no guarantee that paying the ransom will return the files successfully. As such, this kind of attack also violates the goal of integrity as data and software is irreversibly modified.
 
 
-more prevalent as more devices become dependent on complex software and IOT
+It should be noted that while ransomware does not specifically threaten the goal of privacy and confidentiality, it could be used to disguise some form of dual layer attack which does.
 
 -McAfee Labs 2018:\cite{mcafee_2018}
 "cyber sabotage and disruption of organisations"
@@ -52,15 +61,43 @@ criminals will focus on:
 inconvenience and disruption through dos rather than malicious fatal damage
 specifically those who can AFFORD to pay to quickly recover from the attack
 
-Rise of untraceable cryptocurrencies allows easy money laundering 
 
-%ransomware as a distraction from other attacks- data theft
+%ransomware as a distraction from other attacks- data theft (citation?)
 
 %talk about surveys:
 -Cyber Security Breaches Survey 2017\cite{security_breaches_survey}
+	ransomware has highlighted the VALUE of any electronic data other than personal/financial data
+		the value of this data for health organisations was likely ALREADY known
 
+%Malware:
+Can enter a system in the same way as other forms of malware
+by phishing
+by baiting (infected USB drives, etc.)
+
+can spread by downloads (as above)
+or self-replication via internal or external networks
+
+%NB.:
+%An ERROR is a mistake by a human
+%A FAULT occurs because of this mistake- i.e. incorrect command/process is run
+%A FAILURE is a departure from the required behaviour
+\subsection{Prevent}
+
+Install latest security updates for OS / Software
+Tight access control (read access only where necessary) should minimize access of users to corrupt data
+
+\subsection{Detect}
+Security controls can be employed to detect ransomware.
+In particular, detecting altering of files- ransomware may attempt to modify ANY/ALL files on the system
+Detect virus signatures, actions beyond specifications, statistical changes?
+
+Anti-virus software (keeping it up to date regularly)
+
+Once an attack has been discovered, all affected PCs and network connections from them should be shut down immediately.
+
+\subsection{Recover}
 %prevention, detection and response mechanisms:
-regular (offline) back ups
+regular (OFFLINE) back ups
 while regular backups must be kept as a last resort, prevention and detection is preferable as recovery from a backup may take considerable amounts of time for large data AND aiming to stop access to data
 
 
@@ -69,6 +106,9 @@ while regular backups must be kept as a last resort, prevention and detection is
 \section{Email}
 \subsection{Memo}% 20 Marks
 %Write a memo that the IT managers should email to healthcare personnel who are not IT experts, to warn them about ransomware, to inform them about ways to prevent ransomware attacks, and to advise them what to do if they are affected by such an attack. The memo must only cover the personnel’s use of computers belonging to the organisation and located on the organisation’s premises.
+
+200,000 computers across 150 countries (Europol)\cite{wannacry_reuters}
+48 NHS trusts hit\cite{wannacry_bbc}
 
 %get attention- users need to be aware of the danger:
 %WannaCry brought the NHS to a standstill
