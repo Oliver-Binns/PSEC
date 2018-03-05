@@ -1,4 +1,4 @@
-#Topics in Privacy & Security
+# Topics in Privacy & Security
 This Open Assessment covers two major topics of my Master's Year Privacy & Security module: Ransomware and Trust-Enhanced Reputation Metrics.
 
 The course teaching also covered:
