@@ -5,3 +5,4 @@
 *.sty
 *.bbl
 *.blg
+**/output/*.txt
