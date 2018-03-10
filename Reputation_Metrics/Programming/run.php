@@ -15,8 +15,8 @@ while(!feof($myfile)){
 fclose($myfile);
 
 if (basename(__FILE__) == basename($_SERVER["SCRIPT_FILENAME"])) {
-	//Only run output if file was run DIRECTLY from console, NOT included in another file
-	//i.e. attack.php
+	//Only run output if file was run DIRECTLY from console,
+	//NOT included in another file: i.e. attack.php
 	$base_output = "output/Alpha_" . strval(ALPHA) . "_";
 	require_once("output.php");
 }

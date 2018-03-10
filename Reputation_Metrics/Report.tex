@@ -1,9 +1,12 @@
 \documentclass{article}
+\renewcommand{\thesection}{\roman{section}} 
 \usepackage{graphicx}
 \usepackage[nottoc,numbib]{tocbibind}
-\usepackage[a4paper, total={6in, 8in}]{geometry}
+\usepackage[a4paper, total={6in, 8.75in}]{geometry}
+\usepackage{listings}
 \usepackage{subcaption}
 \usepackage{titling}
+\usepackage{pgffor}
 \newcommand{\subtitle}[1]{%
   \posttitle{%
     \par\end{center}
@@ -25,6 +28,7 @@
 \end{titlepage}
 
 %Your report should not exceed four A4 pages (minimum font size 11pt), not counting the screenshots and plots from parts (ii) and (iii) of the question, and not counting the references.
+%APPROX 1 page per 10 marks!
 
 \section{Description} %5 Marks
 %Describe how the tool works
@@ -33,16 +37,25 @@
 \section{Analysis} %15 Marks
 %Use the tool with MAX_RATINGS=5 to analyse the effect of using \alpha=1, \alpha=1.5, \alpha=2 and \alpha=5 on the overall product ratings from the input file Q2Ratings.txt.
 
-%Include screenshots of the tool output; and plots of the overall ratings of the products with IDs 4, 7 and 29 for these \alpha values. Discuss the differences between the results obtained for different \alpha values, and between these results and the results obtained for the arithmetic mean.
+%Include screenshots of the tool output;
+\ref{fig:tool_output}
+
+%and plots of the overall ratings of the products with IDs 4, 7 and 29 for these \alpha values.
+
+
+%Discuss the differences between the results obtained for different \alpha values, and between these results and the results obtained for the arithmetic mean.
 
 \section{Simulated Attacks} %10 Marks
 %Simulate a self-promoting attack to improve the rating of the product with ID 4 by adding n fake top ratings for this product at the end of Q2Ratings.txt from part (ii) of the question. Each such rating should have a new customer ID, corresponding to a new customer account created by the attacker(s).
+Self-promoting attacks of varying sizes have been simulated on product \#4, this is shown by Fig. \ref{fig:graph_promote}.
 %Plot the increase in the overall rating achieved by attacks of size n=5, n=10, n=15, n=20 and n=25 for the four \alpha values from part (ii) of the question and for an overall rating based on the arithmetic mean.
-
 %Repeat the experiments for slandering attacks on product with ID 29, plotting the decrease in the overall rating achieved by slandering attacks of size n=5, n=10, n=15, n=20 and n=25 for the four \alpha values from part (ii) of the question and for an overall rating based on the arithmetic mean.
+Slander attacks of varying sizes have been simulated on product \#29, this is shown by Fig. \ref{fig:graph_slander}.
 
 \section{Results}
 %Discuss the results from part (iii) of the question. Explain what value of the parameter \alpha offers the best protection against the attacks you experimented with, and assess the advantages and disadvantages	of different values for \alpha.
+The results show that the system is least susceptible to attack when an $\alpha$ value of 2 is used.
+Using values of alpha that ignore new reviews may prevent genuine customer reviewers' opinions from being heard.
 
 \newpage
 \raggedright
@@ -51,5 +64,63 @@
 \newpage
 \section{Appendix}
 %You must attach as an appendix to your single-file submission the source code for the tool. If needed, use a ZIP archive to submit all components of the assessment as a single file.
+\begin{figure}[ht]
+\centering
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[width=0.675\textwidth]{Screenshots/Alpha1}
+\caption{$\alpha = 1$}
+\label{fig:screen_alpha1}
+\end{subfigure}%
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[width=0.675\textwidth]{Screenshots/Alpha1_5}
+\caption{$\alpha = 1.5$}
+\label{fig:screen_alpha1.5}
+\end{subfigure}
+\end{figure}
+
+\begin{figure}\ContinuedFloat
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[width=0.70\textwidth]{Screenshots/Alpha2}
+\caption{$\alpha = 2$}
+\label{fig:screen_alpha2}
+\end{subfigure}%
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[width=0.70\textwidth]{Screenshots/Alpha5}
+\caption{$\alpha = 5$}
+\label{fig:screen_alpha5}
+\end{subfigure}
+\caption{Tool Output for Varying Alpha}
+\label{fig:tool_output}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\begin{subfigure}{0.85\textwidth}
+\centering
+\includegraphics[width=1\textwidth]{Graphs/Promote}
+\caption{Effect of Self-Promotion Attacks of Varying Sizes on Product 4}
+\label{fig:graph_promote}
+\end{subfigure}
+\begin{subfigure}{0.85\textwidth}
+\centering
+\includegraphics[width=1\textwidth]{Graphs/Slander}
+\caption{Effect of Slander Attacks of Varying Sizes on Product 29}
+\label{fig:graph_slander}
+\end{subfigure}
+\caption{Attacks on the Online Store Rating System}
+\end{figure}
+
+\lstset{
+    tabsize=3
+}
+\foreach \x in {run, attack, setup, process, output}
+{
+	\subsection{\x.php}
+	\lstinputlisting[language=PHP]{Programming/\x.php}
+}
 
 \end{document}

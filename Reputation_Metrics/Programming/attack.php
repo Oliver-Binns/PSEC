@@ -12,6 +12,7 @@ for($j = 0; $j < 5; $j++){
 		log_new_rating($db, null, 4, $rating);
 	}
 
-	$base_output = "output/" . ucfirst($attack_type) . "_" . strval($attack * ($j + 1)) . "_Alpha_" . strval(ALPHA) . "_";
+	$base_output = "output/" . ucfirst($attack_type) . "_" . 
+		strval($attack * ($j + 1)) . "_Alpha_" . strval(ALPHA) . "_";
 	require("output.php");
 }

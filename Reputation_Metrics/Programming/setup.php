@@ -1,6 +1,5 @@
 <?php
-//$filename = readline("Input File: ");
-$filename = "Q2Ratings.txt";
+$filename = readline("Input File: ");
 $myfile = fopen($filename, "r");
 
 define("MAX_RATE", intval(readline("Max Rate: ")));
