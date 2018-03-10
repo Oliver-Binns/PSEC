@@ -2,9 +2,14 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-define("ALPHA", 1);
+$max_rate = readline("Max Rate: ");
+$alpha = readline("Alpha: ");
+$filename = readline("Input File: ");
 
-$myfile = fopen("Q2Ratings.txt", "r");
+define("ALPHA", floatval($alpha));
+unset($alpha);
+
+$myfile = fopen($filename, "r");
 
 $db = new mysqli("localhost", "psec", "password");
 $db->query("DROP DATABASE psec_assessment;");
@@ -146,6 +151,18 @@ while(!feof($myfile)){
 	while($row = $result->fetch_assoc()){
 		update_rating($db, $row["product_id"]);
 	}
+}
+
+$rep_based = $db->query("SELECT * FROM products;");
+$average = $db->query("SELECT AVG(rating) rating FROM ratings GROUP BY product_id ORDER BY product_id;");
+foreach($rep_based as $product){
+	$avg = $average->fetch_assoc();
+	echo $product["id"], " ", $product["rating"], " (", $avg["rating"], ")\n";
+}
+echo "\n";
+$result = $db->query("SELECT * FROM customers;");
+foreach($result as $customer){
+	echo $customer["id"], " ", $customer["trust_level"], "\n";
 }
 
 fclose($myfile)
