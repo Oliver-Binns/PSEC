@@ -27,12 +27,50 @@
 \tableofcontents
 \end{titlepage}
 
+\lstset{
+    tabsize=3,
+    numbers=left,
+    morekeywords={continue}
+}
+
 %Your report should not exceed four A4 pages (minimum font size 11pt), not counting the screenshots and plots from parts (ii) and (iii) of the question, and not counting the references.
 %APPROX 1 page per 10 marks!
 
 \section{Description} %5 Marks
 %Describe how the tool works
 %By means of pseudocode accompanied by a suitable description, explaining how your design takes into account scalability issues (so the tool can handle large input files)
+In my implementation of the tool, a number of steps have been taken to help the tool scale.
+The tool utilises relational databases to quickly access product rating data. \texttt{CUSTOMERS} and \texttt{PRODUCTS} as mentioned in the pseudocode are tables in the database. This means that the tool does not need to store all data in memory which is usually the most limited resource.
+\\\\
+As is visible from the pseudocode of the tool, I have also attempted to cut down on superfluous computation wherever possible.
+\begin{lstlisting}
+MAX_RATE, ALPHA, FILE = take input from user
+CUSTOMERS, PRODUCTS = initialise empty array: []
+
+for each RATING of PRODUCT_J by CUSTOMER_I in FILE:
+	if RATING made by a new customer:
+		CUSTOMERS.append(New CUSTOMER_I with Default Trust Level of 0.5)
+
+	if RATING made of a new PRODUCT:
+		PRODUCTS.append(New PRODUCT_J with RATING)
+		continue to next RATING
+	else:
+		Update the Product Rating for PRODUCT_J
+
+	for each CUSTOMER of PRODUCT_J in CUSTOMERS:
+		Update the Trust Level of CUSTOMER
+
+	for each PRODUCT bought by CUSTOMERS of PRODUCT_J:
+		Update the Product Rating of PRODUCT
+
+\end{lstlisting}
+
+%FIND REFERENCES FOR significant scalability issues of Trust-Based Reputation Systems?
+On Line 6 of the above pseudocode, Equation 3 (from the brief) always returns 0.5 when run with an empty set of products. There is no need to run this calculation equation each time, and not doing so will save us a small amount of compute time. On Line 10, in the case that this rating is for a new product, the algorithm skips the updating of related customers and products as this will have little effect. This is because, if a product only has one customer, its overall rating is the same as that customer's rating.
+\\\\
+The loops to update customer trust levels and product ratings on Lines 14 and 17 respectively, are kept to a minimum by filtering down to only updating trust levels of customers that bought the newly rated product. For efficiency, the final implementation need to take care to ensure that each of customer and product is updated only once. If required, further steps to reduce runtime that have not been taken in my implementation, could include only updating Product Ratings (Line 18) if the customer trust levels have changed significantly and running trust level (Line 15) and product rating (Line 18) updates in different, parallel threads.
+\\\\
+As systems scale, they are more likely to become the target of a form of cyber attack. Prepared statements have been used to sanitise inputs whenever input data from outside the program's control is entered into the database in order to protect against SQL injection attacks.
 
 \section{Analysis} %15 Marks
 %Use the tool with MAX_RATINGS=5 to analyse the effect of using \alpha=1, \alpha=1.5, \alpha=2 and \alpha=5 on the overall product ratings from the input file Q2Ratings.txt.
@@ -114,9 +152,6 @@ Using values of alpha that ignore new reviews may prevent genuine customer revie
 \caption{Attacks on the Online Store Rating System}
 \end{figure}
 
-\lstset{
-    tabsize=3
-}
 \foreach \x in {run, attack, setup, process, output}
 {
 	\subsection{\x.php}

@@ -1,10 +1,10 @@
 <?php
 function log_new_rating($db, $customer_id, $product_id, $rating){
+	$trust = 0.5; //Equation 3 returns 0.5 when given the EMPTY SET
 	//Check if this is a new user:
 	if($customer_id == null){
 		//This is a simulated attack:
 		//completely new customer ID must be created:
-		$trust = trust_index([]);
 		$stmt = $db->prepare(
 			"INSERT INTO customers (trust_level) VALUES(?);"
 		);
@@ -24,7 +24,6 @@ function log_new_rating($db, $customer_id, $product_id, $rating){
 				$db->prepare(
 					"INSERT INTO customers VALUES (?, ?);"
 				)){
-				$trust = trust_index([]);
 				$stmt->bind_param("ss", $customer_id, $trust);
 				$stmt->execute();
 			}
@@ -91,6 +90,7 @@ function update_rating($db, $product_id){
 	$stmt->execute();
 	$result = $stmt->get_result();
 
+	//Equation 2 (Brief.pdf):
 	$numerator = 0;
 	$denominator = 0;
 
@@ -104,6 +104,7 @@ function update_rating($db, $product_id){
 	$stmt->bind_param("ss", $rating, $product_id);
 	$stmt->execute();
 }
+
 
 function update_trust($db, $customer_id){
 	$fetch_products = "SELECT
@@ -125,6 +126,7 @@ function update_trust($db, $customer_id){
 	$stmt->execute();
 }
 
+//Equation 3 (Brief.pdf):
 function trust_index($products){
 	$numerator = 1;
 	$denominator = 2;
@@ -141,6 +143,7 @@ function trust_index($products){
 	return $numerator / $denominator; 
 }
 
+//Equation 4 (Brief.pdf):
 function is_trusted($overall_rating, $customer_rating){
 	if(abs($overall_rating - $customer_rating) <= ALPHA){
 		return 1;
