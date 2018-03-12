@@ -22,7 +22,8 @@
  
 \begin{document}
 \begin{titlepage}
-\maketitle
+\clearpage\maketitle
+\thispagestyle{empty}
 \tableofcontents
 \end{titlepage}
 
@@ -35,40 +36,48 @@
 \subsection{Introduction}
 %Write a technical report the organisation's IT managers about the structure of ransomware attacts, about the dangers these attacks post to healthcare providers, and about the prevention, detection and response mechanisms they should implement on the organisation's computers to best protect them against such attacks.
 
-2017 saw a significant rise in frequency of ransomware attacks[cite], with WannaCry\cite{wannacry_reuters, wannacry_bbc} and NotPetya\cite{petya_independent} being two particularly damaging examples.
-These attacks becoming more prevalent is likely driven by the rise of cryptocurrencies (such as bitcoin) which allows money laundering to be %is this true?
-
-As more essential appliances, such as thermostats and smoke detectors, become dependent on complex software and, with the internet of things providing possibilities for remote attack, it is likely this trend will continue.
-\\\\
+%BACKGROUND- Newsy stuff
+2017 saw a significant rise in frequency of ransomware attacks[CITE], with WannaCry\cite{wannacry_reuters, wannacry_bbc} and NotPetya\cite{petya_independent} being two particularly damaging examples.
+These attacks becoming more prevalent is likely driven by the rise of cryptocurrencies, such as Bitcoin, which are more difficult to trace than traditional bank transfers.
+Furthermore, as more essential appliances, such as thermostats and smoke detectors, become dependent on complex software and, with the internet of things providing new possibilities for remote attack, it is likely this trend will continue.
+\\\\%WHAT HAPPENS?
+At a high-level the attack works as a form of protection racket, with profit as the key motivation\cite{mcafee_2018}.
+%-McAfee Labs 2018:\cite{mcafee_2018}
+%"cyber sabotage and disruption of organisations"
+%profit is the key driver of ransomware: criminals aim to make money from inconveniencing a user
+%unscrupulous competitors or criminals (protection racket)
+The attack aims to violate the security goal of availability.
+Users are denied access to vital systems and services and offered the option to pay to get around this inconvenience. As with other criminal ransom acts, there is absolutely no guarantee that paying the ransom will return the files successfully\cite{ncsc_mitigating_malware}. 
+Indeed doing so also incentivises the hacker to produce more attacks in the future.
+A recent report has even shown that as little as 19\% of ransomware victims who pay the ransom may actually get their files back\cite{cyberedge_group, forbes_cyberedge}. As such, this kind of attack also violates the goal of integrity as data and software is irreversibly modified.
+It should also be noted that while ransomware does not specifically threaten the goal of privacy and confidentiality, it could be used to disguise some form of dual layer attack which does.
+\\\\%technical explanation
+%What does ransomware actually do:
+%encrypts files -> one way transformation, unless key is known
+There are a number of ways in which ransomware may attempt to deny access to a system, the most effective of these being to encrypt files on the computer harddrive. 
+Encryption uses one-way functions which are computationally hard to reverse, so attempting to restore the data without knowing the key used to encrypt it is \textbf{not} an option.
+All files including software, documents and other data may be affected potentially causing a complete loss of the computer.
+This technique is what made the WannaCry and NotPetya so efficacious.
+%what other methods are there?
+Another type of ransomware, known as locker ransomware, may leave files untouched in favour of denying the user access to their desktop and programs. In this case it may be possible to recover critical files from the machine, but a clean restore from a backup may still be preferable.
+\\\\%LATEST DEVELOPMENTS
 %Ransomware need not ALWAYS be self-multiplying.. but when it is, it can be particularly dangerous!
-The latest strains of ransomware are particularly destructive as they fall under the category of a virus because as well as infecting the host program, they also attempt to self-multiply across networks. This makes them especially problematic for businesses as they can easily spread across internal networks and 
-\\\\
+The latest strains of ransomware have also begun to include the ability to self-multiply meaning they fall under the category of a computer virus. This makes them especially problematic for businesses as they can easily spread across internal networks infecting multiple machines and encrypting a vast number of files.
+%stopping this early is difficult but necessary!
+%ransomware as a distraction from other attacks- data theft (citation?)
+\\\\%RELATE THIS ALL TO HEALTHCARE
 %structure of ransomware:
-The attack aims to violate the security goal of availability. Users are denied access to systems and services that are so vital they will pay to avoid the inconvenience that this lack of access causes.
-The attack works at a form of protection racket, targeting users who can afford to pay, with businesses being a common target in recent years.
-As mentioned above, the latest ransomware are self-multiplying and will not discriminate between businesses and important services such as healthcare.
+As mentioned above, the latest ransomware are self-multiplying and will therefore not discriminate between businesses and important services such as healthcare.
+While ransomware has demonstrated to businesses any of their electronic data may be important\cite{security_breaches_survey} and many have opted to pay the ransom for its recovery, it is hoped that the value of medical data has never been in question.
+%talk about surveys:
+%-Cyber Security Breaches Survey 2017\cite{security_breaches_survey}
+%	ransomware has highlighted the VALUE of any electronic data other than personal/financial data
+%		the value of this data for health organisations was likely ALREADY known
 %DOES THIS HAVE ANY HEALTHCARE SPECIFIC PROBLEMS?
 In the healthcare industry, it is particularly important to defend against any violations of availability.
 For obvious reasons, timely access to medical data may be the difference between life and death for some patients.
 It is likely be dangerous to run surgeries without full access to patient's medical data or even to blood transfusion or organ donation databases.
 %show examples of this?
-\\\\
-As with other criminal ransom acts, there is absolutely no guarantee that paying the ransom will return the files successfully\cite{ncsc_mitigating_malware}. As such, this kind of attack also violates the goal of integrity as data and software is irreversibly modified.
-It should also be noted that while ransomware does not specifically threaten the goal of privacy and confidentiality, it could be used to disguise some form of dual layer attack which does.
-\\\\
-
-
--McAfee Labs 2018:\cite{mcafee_2018}
-"cyber sabotage and disruption of organisations"
-profit is the key driver of ransomware: criminals aim to make money from inconveniencing a user
-%unscrupulous competitors or criminals (protection racket)
-
-%ransomware as a distraction from other attacks- data theft (citation?)
-
-%talk about surveys:
--Cyber Security Breaches Survey 2017\cite{security_breaches_survey}
-	ransomware has highlighted the VALUE of any electronic data other than personal/financial data
-		the value of this data for health organisations was likely ALREADY known
 
 %NB.:
 %An ERROR is a mistake by a human
@@ -90,7 +99,7 @@ can spread by downloads (as above)
 or self-replication via internal or external networks
 \\\\
 Firstly, keeping operating systems and other software up-to-date ensure that the latest security updates are installed. It's particularly import to ensure that any operating systems are still being supported with new security fixes.
-While extended support for Windows XP was dropped back in April 2014, it is estimated that 3.3\% of Windows PCs are still running this OS, which translates to approximately 140 million machines\cite{statcounter}.  The WannaCry vulnerability was patched in a Windows 10 security update\cite{wannacry_patch, windows10march} two months before the ransomware took hold so this action would have prevented much of the attack's impact. While it is necessary to test major updates to ensure important software is not affected and data can be migrated, support expiry dates are announced years in advance\cite{microsoft_lifecycle_factsheet}, so there should be plenty of time to prepare for this. The cost of upgrade should \textbf{never} overule the requirement to ensure system security, especially when patient's data is involved.%cite example for this?
+While extended support for Windows XP was dropped back in April 2014, it is estimated that 3.3\% of Windows PCs are still running this OS, which translates to approximately 140 million machines\cite{statcounter}.  The WannaCry vulnerability was patched in Windows 7, 8.1 and 10 security updates\cite{wannacry_patch2, wannacry_patch, windows10march} two months before the ransomware took hold so this action would have prevented much of the attack's impact. While it is necessary to test major updates to ensure important software is not affected and data can be migrated, support expiry dates are announced years in advance\cite{microsoft_lifecycle_factsheet}, so there should be plenty of time to prepare for this. The cost of upgrade should \textbf{never} overule the requirement to ensure system security, especially when patient's data is involved.%cite example for this?
 \\\\
 Ensuring tight access control should also help to minimize the impact of ransomware. Minimizing users' access to only the assets which they absolutely require will ensure that 
 
@@ -105,6 +114,7 @@ In particular, detecting altering of files- ransomware may attempt to modify ANY
 Detect virus signatures, actions beyond specifications, statistical changes?
 
 Anti-virus software (keeping it up to date regularly)
+still may not be particularly effective
 
 Once an attack has been discovered, all affected PCs and network connections from them should be shut down immediately.
 
@@ -127,7 +137,8 @@ The National Cyber Security Centre recommend the following steps to recover from
 \end{itemize}
 
 %--look into projects such as NoMoreRansom and Cyber Threat Alliance
-
+\textit{N.B. As much of this report regards recent events, information has been taken from reputable news sources and trusted security organisations where possible.
+Where this has not been possible, multiple sources have been provided in order to provide further assurance of the correctness of statements.}
 
 \section{Email}
 \subsection{Memo}% 20 Marks - 2 pages 
