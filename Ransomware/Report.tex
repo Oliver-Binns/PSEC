@@ -37,7 +37,7 @@
 %Write a technical report the organisation's IT managers about the structure of ransomware attacts, about the dangers these attacks post to healthcare providers, and about the prevention, detection and response mechanisms they should implement on the organisation's computers to best protect them against such attacks.
 
 %BACKGROUND- Newsy stuff
-2017 saw a significant rise in frequency of ransomware attacks[CITE], with WannaCry\cite{wannacry_reuters, wannacry_bbc} and NotPetya\cite{petya_independent} being two particularly damaging examples.
+The past few years have seen a significant increase in frequency of ransomware attacks\cite{doj_ransomware, symantec_istr}, with WannaCry\cite{wannacry_reuters, wannacry_bbc} and NotPetya\cite{petya_independent} being two particularly damaging examples.
 These attacks becoming more prevalent is likely driven by the rise of cryptocurrencies, such as Bitcoin, which are more difficult to trace than traditional bank transfers.
 Furthermore, as more essential appliances, such as thermostats and smoke detectors, become dependent on complex software and, with the internet of things providing new possibilities for remote attack, it is likely this trend will continue.
 \\\\%WHAT HAPPENS?
@@ -47,26 +47,32 @@ At a high-level the attack works as a form of protection racket, with profit as 
 %profit is the key driver of ransomware: criminals aim to make money from inconveniencing a user
 %unscrupulous competitors or criminals (protection racket)
 The attack aims to violate the security goal of availability.
-Users are denied access to vital systems and services and offered the option to pay to get around this inconvenience. As with other criminal ransom acts, there is absolutely no guarantee that paying the ransom will return the files successfully\cite{ncsc_mitigating_malware}. 
+Users are denied access to vital systems and services and offered the option to pay to get around this inconvenience.
+Countdown timers are often displayed here to induce a sense of panic in users making them act rashly and pay the ransom (Fig. \ref{wannacry_decryptor}).
+As with other criminal ransom acts, there is absolutely no guarantee that paying the ransom will return the files successfully\cite{ncsc_mitigating_malware}. 
 Indeed doing so also incentivises the hacker to produce more attacks in the future.
-A recent report has even shown that as little as 19\% of ransomware victims who pay the ransom may actually get their files back\cite{cyberedge_group, forbes_cyberedge}. As such, this kind of attack also violates the goal of integrity as data and software is irreversibly modified.
+It has been argued that previous cases where the ransom has been paid by hospitals have been directly responsible for subsequent healthcare attacks\cite{minimizing_the_risks}.
+A recent report has even shown that as little as 19\% of ransomware victims who pay the ransom may actually get their files back\cite{cyberedge_group, forbes_cyberedge}. In particular the high profile `ransomware' variant NotPetya is actually wiper malware\cite{notpetya_wiper}, meaning there is no possible way to recover encrypted files, even if the ransom is paid, as the key is not saved after encryption. It is often very difficult to tell the difference between, ransomware and this type of wiper malware. As such, this kind of attack also violates the goal of integrity as data and software is irreversibly modified.
 It should also be noted that while ransomware does not specifically threaten the goal of privacy and confidentiality, it could be used to disguise some form of dual layer attack which does.
 \\\\%technical explanation
 %What does ransomware actually do:
 %encrypts files -> one way transformation, unless key is known
-There are a number of ways in which ransomware may attempt to deny access to a system, the most effective of these being to encrypt files on the computer harddrive. 
+There are a number of ways in which ransomware may attempt to deny access to a system. The most effective of these is to encrypt files on the computer harddrive, with this type of ransomware is known as cryptoransomware.
 Encryption uses one-way functions which are computationally hard to reverse, so attempting to restore the data without knowing the key used to encrypt it is \textbf{not} an option.
 All files including software, documents and other data may be affected potentially causing a complete loss of the computer.
 This technique is what made the WannaCry and NotPetya so efficacious.
-%what other methods are there?
 Another type of ransomware, known as locker ransomware, may leave files untouched in favour of denying the user access to their desktop and programs. In this case it may be possible to recover critical files from the machine, but a clean restore from a backup may still be preferable.
 \\\\%LATEST DEVELOPMENTS
 %Ransomware need not ALWAYS be self-multiplying.. but when it is, it can be particularly dangerous!
-The latest strains of ransomware have also begun to include the ability to self-multiply meaning they fall under the category of a computer virus. This makes them especially problematic for businesses as they can easily spread across internal networks infecting multiple machines and encrypting a vast number of files.
+Some of the recent trends in ransomware are making their attacks more dangerous than ever.
+The latest strains of ransomware have begun to include the ability to self-multiply meaning they fall under the category of a computer virus. This makes them especially problematic for businesses as they can easily spread across internal networks infecting multiple machines and encrypting a vast number of files.
 %stopping this early is difficult but necessary!
 %ransomware as a distraction from other attacks- data theft (citation?)
+%ransomware as a service
+%other platforms: Android, macOS
+Hackers have also been attempting to attack new platforms with the first widespread Mac ransomware being distributed during 2016, as well as a number of threats to the Android OS emerging capable of attacking mobile devices as well as SmartTVs running Android. 
 \\\\%RELATE THIS ALL TO HEALTHCARE
-%structure of ransomware:
+%todo: further reflection on healthcare problems
 As mentioned above, the latest ransomware are self-multiplying and will therefore not discriminate between businesses and important services such as healthcare.
 While ransomware has demonstrated to businesses any of their electronic data may be important\cite{security_breaches_survey} and many have opted to pay the ransom for its recovery, it is hoped that the value of medical data has never been in question.
 %talk about surveys:
@@ -84,62 +90,67 @@ It is likely be dangerous to run surgeries without full access to patient's medi
 %A FAULT occurs because of this mistake- i.e. incorrect command/process is run
 %A FAILURE is a departure from the required behaviour
 \subsection{Prevent}
-Once ransomware has access to files on the system, it may be difficult if not impossible to recover the files. Therefore the most effective solution to ransomware is to prevent it taking hold altogether. While it is impossible to ensure that every user of the network is behaving responsibly at all times, sensible steps can still be taken to ensure that the actions of any individual have minimal impact.
-\\\\
-%Malware:
-Ransomware can enter a system in the same way as any other form of malware.
-Social engineering is the successful, and thus most common, form of attack vector for home users and organisations alike. %cite?!
-Phishing may be used to encourage users to 
-%defend against by spam/web filters, educating users
-
-baiting (infected USB drives, etc.)
-%defend against by ensuring physical building security
-
-can spread by downloads (as above)
-or self-replication via internal or external networks
+Once ransomware has access to files on the system, it may be difficult if not impossible to recover the files. Therefore the most effective solution to ransomware is to prevent it taking hold altogether. While it is impossible to ensure that every user of the network is behaving responsibly at all times, sensible steps can still be taken to ensure that the actions of any individual have minimal impact. Several of the most high profile ransomware attacks, including WannaCry, could have been easily prevented by following basic cyber security techniques\cite{gizmodo_prevent_wannacry}.
 \\\\
 Firstly, keeping operating systems and other software up-to-date ensure that the latest security updates are installed. It's particularly import to ensure that any operating systems are still being supported with new security fixes.
 While extended support for Windows XP was dropped back in April 2014, it is estimated that 3.3\% of Windows PCs are still running this OS, which translates to approximately 140 million machines\cite{statcounter}.  The WannaCry vulnerability was patched in Windows 7, 8.1 and 10 security updates\cite{wannacry_patch2, wannacry_patch, windows10march} two months before the ransomware took hold so this action would have prevented much of the attack's impact. While it is necessary to test major updates to ensure important software is not affected and data can be migrated, support expiry dates are announced years in advance\cite{microsoft_lifecycle_factsheet}, so there should be plenty of time to prepare for this. The cost of upgrade should \textbf{never} overule the requirement to ensure system security, especially when patient's data is involved.%cite example for this?
 \\\\
-Ensuring tight access control should also help to minimize the impact of ransomware. Minimizing users' access to only the assets which they absolutely require will ensure that 
-
- Ensuring users only have read access, (read access only where necessary) should minimize access of users to corrupt data
-review this regularly
+%Malware:
+Ransomware can enter a system in the same way as any other form of malware. Social engineering is the most successful, and thus most common, form of attack vector for home users and organisations alike.
+Phishing emails are the most likely source with approximately one in 131 emails containing malware, often disguised as routine notifications such as invoices or receipts. From here, multiple techniques are used to infect the user's computer, JavaScript or Microsoft Office macros might be used to download the file, or the malicious attachment might install it directly.\cite{symantec_istr}
+Educating users to this threat of of the paramount importance, users should be aware of the danger that spam emails such as these can cause.
+Using strong spam filters on company emails should also be able to help to significantly reduce this threat. It might also be prudent to prevent users from accessing personal emails on their work computers as it cannot be assumed that suitable spam filters are in place for these.
+%defend against by spam/web filters, educating users
+%defend against by ensuring physical building security
+%%EDUCATE USERS,
+%%PROVIDE SPAM FILTERS
+%PROVIDE CLOUD SERVICES?- watch out for the legality of this with regards to patient data!
+\\\\
+Once the ransomware has access to a single computer on the internal network, it may be able to cause significant damage to files stored on any shared drives.
+Ensuring tight access control on these drives should help to minimize the impact that ransomware can have. Minimizing users' access to only the assets which they absolutely require, and limiting this to read only where possible, will prevent ransomware acting as that user from corrupting these files.
+Regular reviews should take place to ensure that access should be revoked if it is no longer needed.
+An alternative to this could be to provide managed cloud services which often retain previous versions of files, allowing them to be reverted to their unencrypted form after the attack. Unfortunately, there may be legal issues here as many cloud services store their data internationally meaning data protection laws may be broken.
 
 \subsection{Detect}
-Once a ransomware attack has taken hold, its important to detect and stop it before serious widespread damage can be done.
+Once a ransomware attack has taken hold, its important to detect and stop it before serious widespread damage can be done. This is particularly difficult as the ransomware often does not reveal itself until encryption of the computer and all data is complete.
 \\\\
-Security controls can be employed to detect ransomware.
-In particular, detecting altering of files- ransomware may attempt to modify ANY/ALL files on the system
-Detect virus signatures, actions beyond specifications, statistical changes?
-
-Anti-virus software (keeping it up to date regularly)
-still may not be particularly effective
-
-Once an attack has been discovered, all affected PCs and network connections from them should be shut down immediately.
+Anti-virus software may be able to detect and stop ransomware. Classic antivirus software only searches for and removes \textit{known} viruses from machines. Unfortunately this will not be particularly effective against new and unknown malware.
+As well as being able to find and remove known ransomware, some modern antivirus software, such as Sophos InterceptX and Kaspersky Internet Security, perform behavious analysis on programs in order to assess malicious intent.
+In particularly, antivirus software should be able to detect the classic signs of cryptoransomware- the mass editing or renaming of all files on the system.
+Ensuring that the chosen antivirus software incorporates this feature will help protect against new types of malware attacks as well as detecting any attacks that are being specifically targeted at this organisation. As with operating systems and other software, it is of the utmost importance that anti-virus software is kept updated in otder to deal with rapidly changing threats.
 
 \subsection{Recover}
 %prevention, detection and response mechanisms:
 Once ransomware has taken hold, the system can only be recovered if backups have been made. Backups should be regular and stored offline, away from any network.
 While regular backups must be kept as a last resort, prevention and early detection is preferable as recovering a whole system from a backup may take considerable amounts of time.
 \\\\
-The National Cyber Security Centre recommend the following steps to recover from ransomware\cite{ncsc_mitigating_malware}:
+If a wide-scale takeover occurs, its important to immediately disconnect \textbf{all} computers that may have been affected from the network. Beware, it may be difficult to determine which computers have been infected or not.
+Infected computers should be switched off to prevent further damage.
+Once the network is clean of infected devices, network traffic should be monitored to detect further outbreaks and a full antivirus scan should be run.
+After this, the harddrives of infected machines should be formatted or replaced \textbf{offline}, with their operating system reinstalled. This computer should be connected to the \textbf{clean} network in order to update the operating system and all software. These should ensure that a further outbreak of the malware does not occur.\cite{ncsc_mitigating_malware}
+%\\\\
+%The National Cyber Security Centre recommend the following steps to recover from ransomware:
+%immediately disconnect infected computers from the network, by:
+	%turning of Wi-Fi
+	%unplugging ethernet cables
+%format or replace hard drives and reinstall the OS
+%connect the device to a clean network to download, install and update the OS and all software
+%install, update and run antivirus software
+%monitor network traffic and run antivirus scans to identify remaining infection
+
+\subsection{Summary}
+Overall, the key takeaways from this report should be that 
 \begin{itemize}
-	\item immediately disconnect infected computers from the network, by:
-	\begin{itemize}
-		\item turning of Wi-Fi
-		\item unplugging ethernet cables
-	\end{itemize}
-	\item format or replace hard drives and reinstall the OS
-	\item connect the device to a clean network to download, install and update the OS and all software
-	\item install, update and run antivirus software
-	\item monitor network traffic and run antivirus scans to identify remaining infection
+	\item many ransomware attacks are preventable
+	\item educating users to the threat is of paramount importance for successful prevention
+	\item ransoms should never be paid as they incentise further attacks
 \end{itemize}
 
 %--look into projects such as NoMoreRansom and Cyber Threat Alliance
 \textit{N.B. As much of this report regards recent events, information has been taken from reputable news sources and trusted security organisations where possible.
-Where this has not been possible, multiple sources have been provided in order to provide further assurance of the correctness of statements.}
+Where the reputation of a source may not be sufficient, multiple sources have been provided in order to provide further assurance of the correctness of statements.}
 
+\newpage
 \section{Email}
 \subsection{Memo}% 20 Marks - 2 pages 
 %Write a memo that the IT managers should email to healthcare personnel who are not IT experts, to warn them about ransomware, to inform them about ways to prevent ransomware attacks, and to advise them what to do if they are affected by such an attack. The memo must only cover the personnel’s use of computers belonging to the organisation and located on the organisation’s premises.
@@ -149,37 +160,44 @@ Where this has not been possible, multiple sources have been provided in order t
 %WannaCry brought the NHS to a standstill
 In 2017, 48 NHS trusts were brought to a standstill by ransomware. The attack took down the trust's computer systems meaning patient data became complete inaccessible resulting in cancelled appointments and even surgeries\cite{wannacry_bbc}. As well as crippling the NHS, the attack also took down schools, large manufacturers and even banks with an estimated 200,000 computers across 150 countries being affected according to Europol\cite{wannacry_reuters}. Clearly we need to do everything we can to defend against such attacks and \textbf{we need your help}.
 
-\begin{wrapfigure}{l}{0.45\textwidth}
-\includegraphics[width=0.45\textwidth]{Figures/Cartoon}
+\begin{figure}[htp]
+\begin{subfigure}{0.5\textwidth}
+\includegraphics[width=1\textwidth]{Figures/Cartoon}
 \caption{Cyber Security Cartoon\cite{cartoon}}
 \label{Cartoon}
-\end{wrapfigure}
-
-\begin{wrapfigure}{l}{0.45\textwidth}
-\includegraphics[width=0.45\textwidth]{Figures/wannacry}
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
+\includegraphics[width=1\textwidth]{Figures/wannacry}
 \caption{WannaCry Ransomware}
 \label{wannacry_decryptor}
-\end{wrapfigure}
+\end{subfigure}
+\end{figure}
 
 %background of how computers get infected and what ransomware does
-Ransomware attacks that we have seen so far do not distinguish between targets. Their aim is to restrict users from accessing their data or devices and force them to pay a fee to regain entry.
+Ransomware attacks that we have seen so far do not distinguish between targets. Their aim is to restrict any user from accessing their data or devices and force them to pay a fee to regain entry.
+%email attachments that require macros!
 \\\\
 %analogy
 %how the users can help
 %prevent: same as other malware attacks: trojan horse, datatheft
-As with other computer viruses that you may be aware of, ransomware often comes disguised as other programs. You will remember from your cyber security training that viruses may come as email attachments or as downloads from unscrupulous websites.
-
+As with other computer viruses that you may be aware of, ransomware often comes disguised as other files or programs. You will remember from your cyber security training that viruses may come as email attachments or as downloads from unscrupulous websites. These may often be concealed as routine notifications such as invoices or receipts. If you are not expecting to receive such as email, or it looks suspicious, please forward the email to IT Support with the subject line \textit{Suspected Malware} and then delete it.
+\\\\
 We implore you \textbf{not} to:
 \begin{itemize}
-	\item interfere with automatic software updates scheduled by system administrators
+	\item download or open attachments from unknown senders
 	\item run or install software that has not been vetted by system administrators
-		if you would like additional software to be installed, please contact your service desk
-	\item plug \textbf{unknown} devices, such as USB drives, into your computer
+		\begin{itemize}
+			\item if you require additional software to be installed, please contact IT Support
+		\end{itemize}
+	\item plug \textit{unknown} devices, including USB drives, into your computer
 \end{itemize}
 
+Computers regularly receive updates which contain protections against known types of malware, including ransomware.
+While these can be inconvenient, we ask that you do not interfere with automatic software updates scheduled by system administrators and allow them to complete at a suitable time.
+\\\\
 %IF ATTACKED
 %MAIN STEPS
-If you are victim of a ransomware attack, you need to act \textbf{quickly} to stop the problem spreading to other users:
+If you do become victim to a ransomware attack, you will receive a popup like the image attached (Fig. \ref{wannacry_decryptor}), you need to act \textbf{quickly} to stop the problem spreading to other users:
 \begin{itemize}
 	\item \textbf{Don't panic!}
 	\item \textbf{Don't} attempt to pay any ransom demands.
@@ -190,6 +208,7 @@ If you are victim of a ransomware attack, you need to act \textbf{quickly} to st
 %CONCLUSION & FOLLOW UP
 If you have any follow-up questions regarding ransomware or cybersecurity in general, please do not hesistate to reply to this email. We're more than happy to explain anything further and we'd love to hear your suggestions on how to further engage the community.
 
+\newpage
 \subsection{Justification}% 10 Marks - 1 page
 %Write a justification for the information included in the memo from part (ii) of the question, and for how you organised this information. The aim of this justification is to convince the IT managers that the memo they will send is going to be effective.
 Care has been taken to aim the email at its target audience: healthcare professionals are often well educated, but may have minimal knowledge or interest in the area of digital security.
@@ -221,7 +240,8 @@ If the email becomes too long or uses too many technical words, it is unlikely t
 While ransomware is a particularly new threat, the email assumes that the reader is familiar with other types of malware from previous communications and cyber security training.
 %most large companies offer some form of cyber security awareness training
 This is commonplace, and I have had to under take this myself during industrial placements.
-
+\\\\
+Asking users to forward suspicious emails will allow IT support to analyse them and work out why they were not blocked by spam filters
 %refer to BS EN ISO standards?
 NCSC recommendations
 relate this to the technical report in previous section
