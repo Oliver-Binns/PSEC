@@ -45,7 +45,10 @@ for (key, ratings) in products.items():
 	data = ratings + [avgs[key]]
 	pyplot.bar(range(len(data)), data, align='center')
 	xticks = map(lambda x: "$\\alpha$ = " + str(x), alphas)
-	pyplot.xticks(range(len(data) + 1), (xticks + ["Avg"]))
+	pyplot.xticks(range(len(data) + 1), (xticks + ["Mean"]))
+	#pyplot.xlabel("$\\alpha$ Value")
+	pyplot.ylabel("Product Rating")
+	pyplot.ylim(ymin=1)
 	pyplot.show()
 
 
