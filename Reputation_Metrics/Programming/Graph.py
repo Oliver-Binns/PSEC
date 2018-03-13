@@ -39,8 +39,13 @@ for ALPHA in alphas:
 		products[product].append(read_data[product])
 
 for (key, ratings) in products.items():
-	pyplot.axhline(y=avgs[key], color='r', linestyle='-')
-	pyplot.scatter(alphas, ratings)
+	#pyplot.axhline(y=avgs[key], color='r', linestyle='-')
+	#pyplot.bar(alphas, ratings)
+	print(key)
+	data = ratings + [avgs[key]]
+	pyplot.bar(range(len(data)), data, align='center')
+	xticks = map(lambda x: "$\\alpha$ = " + str(x), alphas)
+	pyplot.xticks(range(len(data) + 1), (xticks + ["Avg"]))
 	pyplot.show()
 
 

@@ -41,6 +41,7 @@
 %By means of pseudocode accompanied by a suitable description, explaining how your design takes into account scalability issues (so the tool can handle large input files)
 In my implementation of the tool, a number of steps have been taken to help the tool scale.
 The tool utilises relational databases to quickly access product rating data. \texttt{CUSTOMERS} and \texttt{PRODUCTS} as mentioned in the pseudocode are tables in the database. This means that the tool does not need to store all data in memory which is usually the most limited resource.
+If the tool is needed to scale further, SQL provides \texttt{LIMIT} and \texttt{SKIP} keywords to ensure that memory usage is kept under control.
 \\\\
 As is visible from the pseudocode of the tool, I have also attempted to cut down on superfluous computation wherever possible.
 \begin{lstlisting}
@@ -65,7 +66,7 @@ for each RATING of PRODUCT_J by CUSTOMER_I in FILE:
 
 \end{lstlisting}
 
-%FIND REFERENCES FOR significant scalability issues of Trust-Based Reputation Systems?
+%todo: FIND REFERENCES FOR significant scalability issues of Trust-Based Reputation Systems?
 On Line 6 of the above pseudocode, Equation 3 (from the brief) always returns 0.5 when run with an empty set of products. There is no need to run this calculation equation each time, and not doing so will save us a small amount of compute time. On Line 10, in the case that this rating is for a new product, the algorithm skips the updating of related customers and products as this will have little effect. This is because, if a product only has one customer, its overall rating is the same as that customer's rating.
 \\\\
 The loops to update customer trust levels and product ratings on Lines 14 and 17 respectively, are kept to a minimum by filtering down to only updating trust levels of customers that bought the newly rated product. For efficiency, the final implementation need to take care to ensure that each of customer and product is updated only once. If required, further steps to reduce runtime that have not been taken in my implementation, could include only updating Product Ratings (Line 18) if the customer trust levels have changed significantly and running trust level (Line 15) and product rating (Line 18) updates in different, parallel threads.
@@ -76,12 +77,18 @@ As systems scale, they are more likely to become the target of a form of cyber a
 %Use the tool with MAX_RATINGS=5 to analyse the effect of using \alpha=1, \alpha=1.5, \alpha=2 and \alpha=5 on the overall product ratings from the input file Q2Ratings.txt.
 
 %Include screenshots of the tool output;
-\ref{fig:tool_output}
-
+A tool has been created to provide overall product ratings from an input file. Screenshots of the tool output for the text-file \texttt{Q2Ratings.txt} are shown in Fig. \ref{fig:tool_output}.
 %and plots of the overall ratings of the products with IDs 4, 7 and 29 for these \alpha values.
-
-
+Plots of the ratings for products with IDs 4, 7 and 29 are shown in Fig. \ref{fig:plots_varying_alpha}. For comparison these plots also show the arithmetic mean- the likely rating of the product if a trust-based reputation system is not used.
+\\\\
 %Discuss the differences between the results obtained for different \alpha values, and between these results and the results obtained for the arithmetic mean.
+The products here show the trust-based reputation system working well.
+Product \#4's ratings are all at the bottom end of the scale, with each rating being either 1, 2 or 3. 
+Product \#29's ratings are also all similar, but at the top end of the scale, with each rating being 4 or 5.
+In these cases the reputation system works well, keeping the overall rating close to the arithmetic mean as the ratings roughly agree how the product should be rated (Figs. \ref{fig:product4} \& \ref{fig:product29}).
+\\\\
+Product \#7's ratings are much more hit and miss, with every rating being either the minimum rating of 1 or the maximum rating of 5.
+Here (Fig. \ref{fig:product7}) we can see the reputation system working to compensate for users' disagreement.
 
 \section{Simulated Attacks} %10 Marks
 %Simulate a self-promoting attack to improve the rating of the product with ID 4 by adding n fake top ratings for this product at the end of Q2Ratings.txt from part (ii) of the question. Each such rating should have a new customer ID, corresponding to a new customer account created by the attacker(s).
@@ -90,9 +97,10 @@ Self-promoting attacks of varying sizes have been simulated on product \#4, this
 %Repeat the experiments for slandering attacks on product with ID 29, plotting the decrease in the overall rating achieved by slandering attacks of size n=5, n=10, n=15, n=20 and n=25 for the four \alpha values from part (ii) of the question and for an overall rating based on the arithmetic mean.
 Slander attacks of varying sizes have been simulated on product \#29, this is shown by Fig. \ref{fig:graph_slander}.
 
-\section{Results}
+\section{Results} %10 marks
 %Discuss the results from part (iii) of the question. Explain what value of the parameter \alpha offers the best protection against the attacks you experimented with, and assess the advantages and disadvantages	of different values for \alpha.
 The results show that the system is least susceptible to attack when an $\alpha$ value of 2 is used.
+%but probably also less susceptible to changes in review
 Using values of alpha that ignore new reviews may prevent genuine customer reviewers' opinions from being heard.
 %its hard to distinguish between GENUINE and FAKE reviews
 
@@ -103,7 +111,34 @@ Using values of alpha that ignore new reviews may prevent genuine customer revie
 \newpage
 \section{Appendix}
 %You must attach as an appendix to your single-file submission the source code for the tool. If needed, use a ZIP archive to submit all components of the assessment as a single file.
-\begin{figure}[ht]
+\begin{figure}[htp]
+\centering
+\begin{subfigure}{0.49\textwidth}
+\centering
+\includegraphics[width=1\textwidth]{Graphs/Product4}
+\caption{Product 4}
+\label{fig:product4}
+\end{subfigure}
+\begin{subfigure}{0.49\textwidth}
+\centering
+\includegraphics[width=1\textwidth]{Graphs/Product7}
+\caption{Product 7}
+\label{fig:product7}
+\end{subfigure}
+
+
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[width=1\textwidth]{Graphs/Product29}
+\caption{Product 29}
+\label{fig:product29}
+\end{subfigure}
+\caption{Rating change for varying $\alpha$}
+\label{fig:plots_varying_alpha}
+\end{figure}
+
+
+\begin{figure}[htp]
 \centering
 \begin{subfigure}{0.45\textwidth}
 \centering
@@ -119,7 +154,7 @@ Using values of alpha that ignore new reviews may prevent genuine customer revie
 \end{subfigure}
 \end{figure}
 
-\begin{figure}\ContinuedFloat
+\begin{figure}[htp]\ContinuedFloat
 \begin{subfigure}{0.45\textwidth}
 \centering
 \includegraphics[width=0.9\textwidth]{Screenshots/Alpha2}
@@ -136,7 +171,7 @@ Using values of alpha that ignore new reviews may prevent genuine customer revie
 \label{fig:tool_output}
 \end{figure}
 
-\begin{figure}[ht]
+\begin{figure}[htp]
 \centering
 \begin{subfigure}{0.85\textwidth}
 \centering
@@ -153,6 +188,7 @@ Using values of alpha that ignore new reviews may prevent genuine customer revie
 \caption{Attacks on the Online Store Rating System}
 \end{figure}
 
+\clearpage
 \foreach \x in {run, attack, setup, process, output}
 {
 	\subsection{\x.php}
