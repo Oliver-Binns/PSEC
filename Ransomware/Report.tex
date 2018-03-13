@@ -57,7 +57,7 @@ It should also be noted that while ransomware does not specifically threaten the
 \\\\%technical explanation
 %What does ransomware actually do:
 %encrypts files -> one way transformation, unless key is known
-There are a number of ways in which ransomware may attempt to deny access to a system. The most effective of these is to encrypt files on the computer harddrive, with this type of ransomware is known as cryptoransomware.
+There are a number of ways in which ransomware may attempt to deny access to a system. The most effective of these is to encrypt files on the computer harddrive, this type of ransomware is known as cryptoransomware.
 Encryption uses one-way functions which are computationally hard to reverse, so attempting to restore the data without knowing the key used to encrypt it is \textbf{not} an option.
 All files including software, documents and other data may be affected potentially causing a complete loss of the computer.
 This technique is what made the WannaCry and NotPetya so efficacious.
@@ -70,7 +70,7 @@ The latest strains of ransomware have begun to include the ability to self-multi
 %ransomware as a distraction from other attacks- data theft (citation?)
 %ransomware as a service
 %other platforms: Android, macOS
-Hackers have also been attempting to attack new platforms with the first widespread Mac ransomware being distributed during 2016, as well as a number of threats to the Android OS emerging capable of attacking mobile devices as well as SmartTVs running Android. 
+Hackers have also been attempting to attack new platforms with the first widespread Mac ransomware being distributed during 2016, as well as a number of threats to the Android OS emerging capable of attacking mobile devices as well as smart TVs running Android. 
 \\\\%RELATE THIS ALL TO HEALTHCARE
 %todo: further reflection on healthcare problems
 As mentioned above, the latest ransomware are self-multiplying and will therefore not discriminate between businesses and important services such as healthcare.
@@ -90,16 +90,18 @@ It is likely be dangerous to run surgeries without full access to patient's medi
 %A FAULT occurs because of this mistake- i.e. incorrect command/process is run
 %A FAILURE is a departure from the required behaviour
 \subsection{Prevent}
+\label{prevent}
+%symantec- email gateway?
 Once ransomware has access to files on the system, it may be difficult if not impossible to recover the files. Therefore the most effective solution to ransomware is to prevent it taking hold altogether. While it is impossible to ensure that every user of the network is behaving responsibly at all times, sensible steps can still be taken to ensure that the actions of any individual have minimal impact. Several of the most high profile ransomware attacks, including WannaCry, could have been easily prevented by following basic cyber security techniques\cite{gizmodo_prevent_wannacry}.
 \\\\
 Firstly, keeping operating systems and other software up-to-date ensure that the latest security updates are installed. It's particularly import to ensure that any operating systems are still being supported with new security fixes.
-While extended support for Windows XP was dropped back in April 2014, it is estimated that 3.3\% of Windows PCs are still running this OS, which translates to approximately 140 million machines\cite{statcounter}.  The WannaCry vulnerability was patched in Windows 7, 8.1 and 10 security updates\cite{wannacry_patch2, wannacry_patch, windows10march} two months before the ransomware took hold so this action would have prevented much of the attack's impact. While it is necessary to test major updates to ensure important software is not affected and data can be migrated, support expiry dates are announced years in advance\cite{microsoft_lifecycle_factsheet}, so there should be plenty of time to prepare for this. The cost of upgrade should \textbf{never} overule the requirement to ensure system security, especially when patient's data is involved.%cite example for this?
+While extended support for Windows XP was dropped back in April 2014, it is estimated that 3.3\% of Windows PCs are still running this OS, which translates to approximately 140 million machines\cite{statcounter}. The WannaCry vulnerability was patched in Windows 7, 8.1 and 10 security updates\cite{wannacry_patch2, wannacry_patch, windows10march} two months before the ransomware took hold so this action would have prevented much of the attack's impact. While it is necessary to test major updates to ensure important software is not affected and data can be migrated, support expiry dates are announced years in advance\cite{microsoft_lifecycle_factsheet}, so there should be plenty of time to prepare for this. The cost of upgrade should \textbf{never} overule the requirement to ensure system security, especially when patient's data is involved.%cite example for this?
 \\\\
 %Malware:
 Ransomware can enter a system in the same way as any other form of malware. Social engineering is the most successful, and thus most common, form of attack vector for home users and organisations alike.
 Phishing emails are the most likely source with approximately one in 131 emails containing malware, often disguised as routine notifications such as invoices or receipts. From here, multiple techniques are used to infect the user's computer, JavaScript or Microsoft Office macros might be used to download the file, or the malicious attachment might install it directly.\cite{symantec_istr}
-Educating users to this threat of of the paramount importance, users should be aware of the danger that spam emails such as these can cause.
-Using strong spam filters on company emails should also be able to help to significantly reduce this threat. It might also be prudent to prevent users from accessing personal emails on their work computers as it cannot be assumed that suitable spam filters are in place for these.
+Educating users to this threat of the paramount importance, users should be aware of the danger that spam emails such as these can cause.
+Using a reputable email gateway and strong spam filters on company emails should also be able to help to significantly reduce this threat. It might also be prudent to prevent users from accessing personal emails on their work computers as it cannot be assumed that suitable spam filters are in place for these.
 %defend against by spam/web filters, educating users
 %defend against by ensuring physical building security
 %%EDUCATE USERS,
@@ -109,20 +111,20 @@ Using strong spam filters on company emails should also be able to help to signi
 Once the ransomware has access to a single computer on the internal network, it may be able to cause significant damage to files stored on any shared drives.
 Ensuring tight access control on these drives should help to minimize the impact that ransomware can have. Minimizing users' access to only the assets which they absolutely require, and limiting this to read only where possible, will prevent ransomware acting as that user from corrupting these files.
 Regular reviews should take place to ensure that access should be revoked if it is no longer needed.
-An alternative to this could be to provide managed cloud services which often retain previous versions of files, allowing them to be reverted to their unencrypted form after the attack. Unfortunately, there may be legal issues here as many cloud services store their data internationally meaning data protection laws may be broken.
+An alternative to this could be to provide managed cloud services which often retain previous versions of files, allowing them to be reverted to their unencrypted form after the attack. Unfortunately, there may be legal issues here as many cloud services store their data internationally meaning data protection laws may be breached.
 
 \subsection{Detect}
 Once a ransomware attack has taken hold, its important to detect and stop it before serious widespread damage can be done. This is particularly difficult as the ransomware often does not reveal itself until encryption of the computer and all data is complete.
 \\\\
 Anti-virus software may be able to detect and stop ransomware. Classic antivirus software only searches for and removes \textit{known} viruses from machines. Unfortunately this will not be particularly effective against new and unknown malware.
-As well as being able to find and remove known ransomware, some modern antivirus software, such as Sophos InterceptX and Kaspersky Internet Security, perform behavious analysis on programs in order to assess malicious intent.
+As well as being able to find and remove known ransomware, some modern antivirus software, such as Sophos Intercept X\cite{intercept-x} and Kaspersky Internet Security\cite{kaspersky-is}, perform behavious analysis on programs in order to assess malicious intent.
 In particularly, antivirus software should be able to detect the classic signs of cryptoransomware- the mass editing or renaming of all files on the system.
 Ensuring that the chosen antivirus software incorporates this feature will help protect against new types of malware attacks as well as detecting any attacks that are being specifically targeted at this organisation. As with operating systems and other software, it is of the utmost importance that anti-virus software is kept updated in otder to deal with rapidly changing threats.
 
 \subsection{Recover}
 %prevention, detection and response mechanisms:
 Once ransomware has taken hold, the system can only be recovered if backups have been made. Backups should be regular and stored offline, away from any network.
-While regular backups must be kept as a last resort, prevention and early detection is preferable as recovering a whole system from a backup may take considerable amounts of time.
+While regular backups must be kept, prevention and early detection is preferable to backup recovery as restoring a whole system may take a considerable amount of time.
 \\\\
 If a wide-scale takeover occurs, its important to immediately disconnect \textbf{all} computers that may have been affected from the network. Beware, it may be difficult to determine which computers have been infected or not.
 Infected computers should be switched off to prevent further damage.
@@ -150,7 +152,6 @@ Overall, the key takeaways from this report should be that
 \textit{N.B. As much of this report regards recent events, information has been taken from reputable news sources and trusted security organisations where possible.
 Where the reputation of a source may not be sufficient, multiple sources have been provided in order to provide further assurance of the correctness of statements.}
 
-\newpage
 \section{Email}
 \subsection{Memo}% 20 Marks - 2 pages 
 %Write a memo that the IT managers should email to healthcare personnel who are not IT experts, to warn them about ransomware, to inform them about ways to prevent ransomware attacks, and to advise them what to do if they are affected by such an attack. The memo must only cover the personnel’s use of computers belonging to the organisation and located on the organisation’s premises.
@@ -158,6 +159,8 @@ Where the reputation of a source may not be sufficient, multiple sources have be
 %explanation and appeal for help!
 %get attention- users need to be aware of the danger:
 %WannaCry brought the NHS to a standstill
+\textbf{\# SUBJECT: RANSOMWARE: APPEAL FOR HELP}
+\\\\
 In 2017, 48 NHS trusts were brought to a standstill by ransomware. The attack took down the trust's computer systems meaning patient data became complete inaccessible resulting in cancelled appointments and even surgeries\cite{wannacry_bbc}. As well as crippling the NHS, the attack also took down schools, large manufacturers and even banks with an estimated 200,000 computers across 150 countries being affected according to Europol\cite{wannacry_reuters}. Clearly we need to do everything we can to defend against such attacks and \textbf{we need your help}.
 
 \begin{figure}[htp]
@@ -180,9 +183,9 @@ Ransomware attacks that we have seen so far do not distinguish between targets. 
 %analogy
 %how the users can help
 %prevent: same as other malware attacks: trojan horse, datatheft
-As with other computer viruses that you may be aware of, ransomware often comes disguised as other files or programs. You will remember from your cyber security training that viruses may come as email attachments or as downloads from unscrupulous websites. These may often be concealed as routine notifications such as invoices or receipts. If you are not expecting to receive such as email, or it looks suspicious, please forward the email to IT Support with the subject line \textit{Suspected Malware} and then delete it.
+As with other computer viruses that you may be aware of, ransomware often comes disguised as other files or programs. You will remember from your cyber-security training that viruses may come as email attachments or as downloads from unscrupulous websites. These may often be concealed as routine notifications such as invoices or receipts. If you are not expecting to receive such as email, or it looks suspicious, please forward the email to IT Support with the subject line \textit{Suspected Malware} and then delete it. Once it has entered our network, most sophisticated variants of ransomware are able to self-multiply onto other computers. As such it's of the utmost importance that it is not allowed to gain access.
 \\\\
-We implore you \textbf{not} to:
+Again, we implore you \textbf{not} to:
 \begin{itemize}
 	\item download or open attachments from unknown senders
 	\item run or install software that has not been vetted by system administrators
@@ -202,59 +205,53 @@ If you do become victim to a ransomware attack, you will receive a popup like th
 	\item \textbf{Don't panic!}
 	\item \textbf{Don't} attempt to pay any ransom demands.
 	\item Switch off and unplug your PC immediately.
-	\item Contact IT support as soon as possible.
+	\item Contact IT support at once.
 \end{itemize}
 
 %CONCLUSION & FOLLOW UP
-If you have any follow-up questions regarding ransomware or cybersecurity in general, please do not hesistate to reply to this email. We're more than happy to explain anything further and we'd love to hear your suggestions on how to further engage the community.
+If you have any follow-up questions regarding ransomware or cyber-security in general, please do not hesistate to reply to this email. We're more than happy to explain anything further and we'd love to hear your suggestions on how to further engage the community.
 
-\newpage
 \subsection{Justification}% 10 Marks - 1 page
 %Write a justification for the information included in the memo from part (ii) of the question, and for how you organised this information. The aim of this justification is to convince the IT managers that the memo they will send is going to be effective.
+As mentioned in the Technical Report, it is of paramount importance that users are aware of the threats that ransomware poses to healthcare organisations, such as this. As well as ensuring employees are aware of the issue, the email needs to communicate the most important steps that users can take to prevent such attacks occuring.
 Care has been taken to aim the email at its target audience: healthcare professionals are often well educated, but may have minimal knowledge or interest in the area of digital security.
-
-As such, the first few lines have been designed to grab the attention of the reader by informing them of the significant impact ransomware has had on similar organisations around the world.
+The email attempts to inform, but not overwhelm the reader with the most important information.
 \\\\
-Appealing to the user directly - makes clear to the reader which actions they are responsible for\\
-Using plurals everywhere else - makes clear this is a problem for the whole organisation and make the user feel comfortable discussing with others if they have questions
+The first few lines of the email have been designed to grab the attention of the reader by informing them of the importance of the topic and significant impact ransomware has had on similar organisations around the world.
+At the end of this paragraph, we appeal to the reader directly, making clear to them that it is their responsibility to help protect from these attacks, which should encourage them to read on. In other situations, plural pronouns have been used to make clear that this is a problem for the whole organisation. This should help the reader feel more comfortable discussing the topic with others if they have questions.
 \\\\
-Graphics such as 
-	screenshots of previous ransomware
-	%help the user know what to expect if they are attacked
-	fun cyber security cartoon
-	main steps:
-help to break up the text.
-\\\\
-
-%which information included
-%how it is organised
-
 As users may not be particularly interested in the subject of the email, it has been kept as short as possible, while still including the necessary facts.
-If the email becomes too long or uses too many technical words, it is unlikely that employees will read it.
-%kept short and to the point, but including necessary facts
-	%too long and users are unlikely to read it (cite?)
+If the email becomes too long or uses too many technical cybersecurity jargon, it is unlikely that employees will read it. My industry experience has shown me that readers often skimread or skip over emails that are either too long, or are too difficult to read. Employees may receive hundreds of emails a day, so it is important that they understand that this one is particularly important. Having said this, healthcare personnel are often well educated, so I have been careful not to oversimplify the significant issues contained in the email. Eye-catching graphics such as screenshots of previous ransomware and a topical cyber security cartoon has been used to help break up the text and further catch the users' interest.
 	%mention Industry experience as justification here?
 	%fun diagram or cartoon to draw readers in ?
 	%healthcare personnel are often well educated though, so don't OVER simplify
-
-While ransomware is a particularly new threat, the email assumes that the reader is familiar with other types of malware from previous communications and cyber security training.
-%most large companies offer some form of cyber security awareness training
-This is commonplace, and I have had to under take this myself during industrial placements.
+%Graphics such as 
+%screenshots of previous ransomware
+%help the user know what to expect if they are attacked
+%fun cyber security cartoon
+%main steps:
+%help to break up the text.
 \\\\
-Asking users to forward suspicious emails will allow IT support to analyse them and work out why they were not blocked by spam filters
+%which information included
+%how it is organised
+While ransomware is a particularly new threat, the email assumes that the reader is familiar with other types of malware from previous communications and cyber security training. This type of training is commonplace in most organisations, I have had to under take this myself during several industrial placements. As such, the email may need to be revised if readers have not undertaken such training.
+\\\\
+The most important prevention techniques that users need to be aware of relate to phishing emails. The significant problem of phishing emails is described in Section \ref{prevent} of the attached Technical Report. 
+The only particularly notable part of this section of the email is asking users to forward suspicious emails.
+If users make the IT administrators aware of any emails, it will ensure they are aware of cases when infected emails may not be blocked by spam filters.
+This should hopefully allow the administrators to improve or fix the spam filters to catch future emails.
 %refer to BS EN ISO standards?
-NCSC recommendations
-relate this to the technical report in previous section
-
-As analogy has been used to help the users relate to the explanation
-%healthcare analogy?
+%NCSC recommendations
+%relate this to the technical report in previous section
+%As analogy has been used to help the users relate to the explanation
 \\\\
-At the end of the email, the main actions that the user will need to take in the event of being hit by a ransomware attack have been bulletpointed, and repeated in order to ensure that the user knows these are the key take aways from the memo.
+Users also need to be aware of the steps that should be taken if ransomware does strike. The most important part of this it to ensure users do not panic and pay the ransom. The user should then know to ensure that their PC is taken offline to prevent the ransomware from encrypting any further files and from self-multiplying. Once this has been done, the attack should not be able to cause further damage in the time it might take IT administrators to respond. These steps are clear to make sure that they stand out amongst the rest of the email- the reader should still be able to pick these points out even if the email is skimread. These bullet points appear towards the end of the email so reader sees them as the key takeaway points of the message.
+\\\\
+%At the end of the email, the main actions that the user will need to take in the event of being hit by a ransomware attack have been bulletpointed, and repeated in order to ensure that the user knows these are the key take aways from the memo.
 %it is important that the users REMEMBERS these takeaways as speed is of the essense in stopping the spread of ransomware, AND they may not be able to access this email after the attack
 %takeaways have been kept to a minimum, users need to know the immediate actions to take- i.e. switch off their PCs and CONTACT IT support..
-The user has also been encouraged to ask any questions that might occur to them as a result of the email. This will hopefully result in some feedback that can help us to judge if the email has been understood by the audience.
-\\\\
-This will be particularly useful in this case as while every effort has been taken to ensure that this memo is suitable for the target audience, it would be a good idea to test it on a member of this audience before sending it out. As this is a university Open Assessment, I have been unable to do this in this instance.
+Finally, the user has also been encouraged to ask any questions that might occur to them as a result of the email. This will hopefully result in some feedback that can help us to judge if the email has been understood by the audience.
+This will be particularly useful as while every effort has been taken to ensure that this memo is suitable for the target audience, it would be a good idea to test it on a member of this audience before sending it out. Unfortunately, as this writing is part of a university Open Assessment, I have been unable to do this in this instance.
 
 \newpage
 \raggedright
