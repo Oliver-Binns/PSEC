@@ -1,5 +1,6 @@
 \documentclass{article}
 \renewcommand{\thesection}{\roman{section}} 
+\usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage[nottoc,numbib]{tocbibind}
 \usepackage[a4paper, total={6in, 8.75in}]{geometry}
@@ -23,7 +24,9 @@
  
 \begin{document}
 \begin{titlepage}
+\clearpage
 \maketitle
+\thispagestyle{empty}
 \tableofcontents
 \end{titlepage}
 
@@ -39,6 +42,10 @@
 \section{Description} %5 Marks
 %Describe how the tool works
 %By means of pseudocode accompanied by a suitable description, explaining how your design takes into account scalability issues (so the tool can handle large input files)
+The tool can be run from either the \texttt{run.php} or \texttt{attack.php} for calculating reviews or simulating attacks respectively. From the command-line \texttt{php run.php} can be called. The program will prompt the user for input of the ratings filename and values of \texttt{MAX\_RATE} and \texttt{ALPHA}.
+\\
+\textit{N.B. An SQL database must be setup and defined in the \texttt{setup.php} file.}
+\\\\
 In my implementation of the tool, a number of steps have been taken to help the tool scale.
 The tool utilises relational databases to quickly access product rating data. \texttt{CUSTOMERS} and \texttt{PRODUCTS} as mentioned in the pseudocode are tables in the database. This means that the tool does not need to store all data in memory which is usually the most limited resource.
 If the tool is needed to scale further, SQL provides \texttt{LIMIT} and \texttt{SKIP} keywords to ensure that memory usage is kept under control.
@@ -74,6 +81,7 @@ The loops to update customer trust levels and product ratings on Lines 14 and 17
 As systems scale, they are more likely to become the target of a form of cyber attack. Prepared statements have been used to sanitise inputs whenever input data from outside the program's control is entered into the database in order to protect against SQL injection attacks.
 
 \section{Analysis} %15 Marks
+\label{analysis}
 %Use the tool with MAX_RATINGS=5 to analyse the effect of using \alpha=1, \alpha=1.5, \alpha=2 and \alpha=5 on the overall product ratings from the input file Q2Ratings.txt.
 
 %Include screenshots of the tool output;
@@ -89,8 +97,19 @@ In these cases the reputation system works well, keeping the overall rating clos
 \\\\
 Product \#7's ratings are much more hit and miss, with every rating being either the minimum rating of 1 or the maximum rating of 5.
 Here (Fig. \ref{fig:product7}) we can see the reputation system working to compensate for users' disagreement.
+When using the arithmetic mean, each rating is treated with equal weight, so the overall rating falls significantly with the subsequent ratings.
+When using the trust-based system, the first rating it receives (5 from Customer \#16), is treated as trustworthy, so it is harder for the subsequent lower ratings to affect overall ratings, when they differ from the overall rating.
+The alpha value acts as the tolerance for difference in ratings, lower values of alpha only accept reviews as trusted if they very close to the overall rating.
+\\\\
+Using a high-value for alpha, $\alpha \geqslant MAX\_RATE$, generally results in a rating that is very similar to the arithmetic mean. The only difference between this trust-based reputation system with $\alpha = 5$ and using the arithmetic mean is that new customers are not trusted initially. As customers leave more ratings, their trust level is mindlessly increased whether or not they fit with what is normal within the context of the rest of the population.
+While newcomers should always be distrusted\cite{reputation_systems}, it is also important to assess the actions of known customers before upgrading the level of trust they are assigned. As such, it is likely we will want to be slightly more discriminatory against users' actions than this.
+\\\\
+At the other end of the spectrum, particularly low values of $\alpha$ may not be tolerant enough to count for the natural variation of opinion. Clearly some users will be harder to impress than others so allowing reviews to differ by a small number should be expected.
+\\\\
+It's difficult to fully assess how successful the reputation system is at it's aim of predicting the future of the customers without further data.
 
 \section{Simulated Attacks} %10 Marks
+\label{attacks}
 %Simulate a self-promoting attack to improve the rating of the product with ID 4 by adding n fake top ratings for this product at the end of Q2Ratings.txt from part (ii) of the question. Each such rating should have a new customer ID, corresponding to a new customer account created by the attacker(s).
 Self-promoting attacks of varying sizes have been simulated on product \#4, this is shown by Fig. \ref{fig:graph_promote}.
 %Plot the increase in the overall rating achieved by attacks of size n=5, n=10, n=15, n=20 and n=25 for the four \alpha values from part (ii) of the question and for an overall rating based on the arithmetic mean.
@@ -98,11 +117,26 @@ Self-promoting attacks of varying sizes have been simulated on product \#4, this
 Slander attacks of varying sizes have been simulated on product \#29, this is shown by Fig. \ref{fig:graph_slander}.
 
 \section{Results} %10 marks
-%Discuss the results from part (iii) of the question. Explain what value of the parameter \alpha offers the best protection against the attacks you experimented with, and assess the advantages and disadvantages	of different values for \alpha.
-The results show that the system is least susceptible to attack when an $\alpha$ value of 2 is used.
+%Discuss the results from part (iii) of the question. Explain what value of the parameter \alpha offers the best protection against the attacks you experimented with, and assess the advantages and disadvantages of different values for \alpha.
+In Section \ref{analysis}, the advantages and disadvantages of different values of alpha were discussed with regards to normal functioning of the reputation system. Here they will be discussed with regards to the simulated attacks as described in Section \ref{attacks}.
+The plots of each attack show that the system is least susceptible to attack when an $\alpha$ value of 2 is used.
+This is the case for both self-promotion and slander attacks of \textit{all} sizes.
+It's worth analysing these results in detail before jumping to the conclusion that $\alpha = 2$ is the best value for the system.
 %but probably also less susceptible to changes in review
-Using values of alpha that ignore new reviews may prevent genuine customer reviewers' opinions from being heard.
+\\\\
+Many good reputation systems ensure that newcomers must behave correctly for a given amount of time in order to gain a good reputation. It is important to balance this resilience to attacks with the ease of admittance for new customers.\cite{attack_defense} As discussed in Section \ref{analysis}, values of $\alpha$ that are close to \texttt{MAX\_RATE} do nothing to ensure that users behave correctly. While this will disincentivise the act of creating new accounts for attacks, they allow attackers to perform multiple attacks across a variety of products using the same account in order to increase their trust level. Obviously a compromise is needed.
+\\\\
 %its hard to distinguish between GENUINE and FAKE reviews
+As well as reducing the ease of admittance for new customers, values of alpha that are too low ($\alpha = 1$) don't perform as well as slightly higher values at protecting against attacks. This can be seen clearly in the plots for each attack (Fig. \ref{fig:graph_attacks}).
+These lower values tend not to trust several of the genuine reviews as they vary slightly too much from the overall rating.
+As such, when attack occurs, the overall rating will begin to deviate from its initial value much more quickly.
+%Using values of alpha that ignore new reviews may prevent genuine customer reviewers' opinions from being heard.
+\\\\
+As this reputation system is fairly primitive, self-promote and slander attacks still have significant effects on the overall rating, with even the most effective value of alpha allowing the attack to change the rating by at least 1. As larger and larger attack sizes are used, the attacker is able to have a significant effect on the product's overall rating. Furthermore, if the attacker has knowledge of the system, they would know that a more effective attack vector could be to submit reviews that are equal to $\alpha$ added to, or subtracted from, from the overall rating as the rating is slowly lowered. A significantly better system is needed to combat these forms of attack. In particular, the ability to find proof of successful transactions, as well as preventing the hacker from obtaining multiple identities, as has been the case in both of these attacks, will be significantly more effective in mitigating both self-promoting and slander attacks.\cite{attack_defense}
+\\\\
+In conclusion, it seems that $\alpha = 2$ is the most effective value for the system after all. It provides a compromise by ignoring as few genuine reviews as possible while still defending well against different types of attack.
+Further work should also be done in order to assess the impact that other forms of attack could have on this reputation system.
+For example, as the system uses the current trust level of the reviewer to calculate overall product reviews, it could be particularly susceptible to a whitewashing attack. This is where the reviewer posts malicious or self-promoting reviews and then attempts to repair their reputation afterwards\cite{attack_defense}.
 
 \newpage
 \raggedright
@@ -186,6 +220,7 @@ Using values of alpha that ignore new reviews may prevent genuine customer revie
 \label{fig:graph_slander}
 \end{subfigure}
 \caption{Attacks on the Online Store Rating System}
+\label{fig:graph_attacks}
 \end{figure}
 
 \clearpage
