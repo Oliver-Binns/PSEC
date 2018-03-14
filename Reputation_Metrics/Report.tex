@@ -42,12 +42,12 @@
 \section{Description} %5 Marks
 %Describe how the tool works
 %By means of pseudocode accompanied by a suitable description, explaining how your design takes into account scalability issues (so the tool can handle large input files)
-The tool can be run from either the \texttt{run.php} or \texttt{attack.php} for calculating reviews or simulating attacks respectively. From the command-line \texttt{php run.php} can be called. The program will prompt the user for input of the ratings filename and values of \texttt{MAX\_RATE} and \texttt{ALPHA}.
+The tool can be run from either the \texttt{run.php} or \texttt{attack.php} scripts in order to calculate reviews or simulate attacks, respectively. For example, from the command-line, \texttt{php run.php} can be called. The program will prompt the user for input of the ratings filename and values of \texttt{MAX\_RATE} and \texttt{ALPHA}.
 \\
 \textit{N.B. An SQL database must be setup and defined in the \texttt{setup.php} file.}
 \\\\
 In my implementation of the tool, a number of steps have been taken to help the tool scale.
-The tool utilises relational databases to quickly access product rating data. \texttt{CUSTOMERS} and \texttt{PRODUCTS} as mentioned in the pseudocode are tables in the database. This means that the tool does not need to store all data in memory which is usually the most limited resource.
+The tool utilises relational databases to quickly access existing product rating data. The \texttt{CUSTOMERS} and \texttt{PRODUCTS} arrays, as mentioned in the pseudocode, are tables in the database. This means that the tool does not need to store all data in memory, which is usually the most limited resource.
 If the tool is needed to scale further, SQL provides \texttt{LIMIT} and \texttt{SKIP} keywords to ensure that memory usage is kept under control.
 \\\\
 As is visible from the pseudocode of the tool, I have also attempted to cut down on superfluous computation wherever possible.
@@ -74,11 +74,11 @@ for each RATING of PRODUCT_J by CUSTOMER_I in FILE:
 \end{lstlisting}
 
 %todo: FIND REFERENCES FOR significant scalability issues of Trust-Based Reputation Systems?
-On Line 6 of the above pseudocode, Equation 3 (from the brief) always returns 0.5 when run with an empty set of products. There is no need to run this calculation equation each time, and not doing so will save us a small amount of compute time. On Line 10, in the case that this rating is for a new product, the algorithm skips the updating of related customers and products as this will have little effect. This is because, if a product only has one customer, its overall rating is the same as that customer's rating.
+On Line 6 of the above pseudocode, Equation 3 (from the brief) always returns 0.5 when run with an empty set of products. There is no need to run this calculation each time. Not doing so will save us a small amount of compute time. On Line 10, in the case that this rating is for a new product, the algorithm skips the updating of related customers and products as this will have little effect. This is because, if a product only has one customer, its overall rating is the same as that customer's rating.
 \\\\
-The loops to update customer trust levels and product ratings on Lines 14 and 17 respectively, are kept to a minimum by filtering down to only updating trust levels of customers that bought the newly rated product. For efficiency, the final implementation need to take care to ensure that each of customer and product is updated only once. If required, further steps to reduce runtime that have not been taken in my implementation, could include only updating Product Ratings (Line 18) if the customer trust levels have changed significantly and running trust level (Line 15) and product rating (Line 18) updates in different, parallel threads.
+The loops to update customer trust levels and product ratings on Lines 14 and 17 respectively, are kept to a minimum by filtering down to only updating trust levels of customers that bought the newly rated product. This is important as these nested loops are the part of the program with the worst worst-case complexity. For efficiency, the final implementation need to take care to ensure that each of customer and product is updated only once. If required, further steps to reduce runtime that have not been taken in my implementation, could include only updating Product Ratings (Line 18) if the customer trust levels have changed significantly and running trust level (Line 15) and product rating (Line 18) updates in different, parallel threads.
 \\\\
-As systems scale, they are more likely to become the target of a form of cyber attack. Prepared statements have been used to sanitise inputs whenever input data from outside the program's control is entered into the database in order to protect against SQL injection attacks.
+As systems scale, they are more likely to become the target of a form of cyber attack. Prepared statements have been used to sanitise inputs whenever input data from outside the program's control is entered into the database. This should successfully protect against SQL injection attacks.
 
 \section{Analysis} %15 Marks
 \label{analysis}
@@ -90,23 +90,23 @@ A tool has been created to provide overall product ratings from an input file. S
 Plots of the ratings for products with IDs 4, 7 and 29 are shown in Fig. \ref{fig:plots_varying_alpha}. For comparison these plots also show the arithmetic mean- the likely rating of the product if a trust-based reputation system is not used.
 \\\\
 %Discuss the differences between the results obtained for different \alpha values, and between these results and the results obtained for the arithmetic mean.
-The products here show the trust-based reputation system working well.
+The products here (Figs. \ref{fig:product4} \& \ref{fig:product29}) show the trust-based reputation system working well.
 Product \#4's ratings are all at the bottom end of the scale, with each rating being either 1, 2 or 3. 
 Product \#29's ratings are also all similar, but at the top end of the scale, with each rating being 4 or 5.
-In these cases the reputation system works well, keeping the overall rating close to the arithmetic mean as the ratings roughly agree how the product should be rated (Figs. \ref{fig:product4} \& \ref{fig:product29}).
+In these cases the reputation system works well, keeping the overall rating close to the arithmetic mean as the ratings roughly agree how the product should be rated.
 \\\\
 Product \#7's ratings are much more hit and miss, with every rating being either the minimum rating of 1 or the maximum rating of 5.
 Here (Fig. \ref{fig:product7}) we can see the reputation system working to compensate for users' disagreement.
-When using the arithmetic mean, each rating is treated with equal weight, so the overall rating falls significantly with the subsequent ratings.
-When using the trust-based system, the first rating it receives (5 from Customer \#16), is treated as trustworthy, so it is harder for the subsequent lower ratings to affect overall ratings, when they differ from the overall rating.
+When using the arithmetic mean, each rating is treated with equal weight, so the overall rating falls significantly with each subsequent poor rating.
+When using the trust-based system, the first rating it receives (5 from Customer \#16), is treated as the most trustworthy, so it is harder for the subsequent lower ratings to affect overall ratings, when they differ from the overall rating.
 The alpha value acts as the tolerance for difference in ratings, lower values of alpha only accept reviews as trusted if they very close to the overall rating.
 \\\\
-Using a high-value for alpha, $\alpha \geqslant MAX\_RATE$, generally results in a rating that is very similar to the arithmetic mean. The only difference between this trust-based reputation system with $\alpha = 5$ and using the arithmetic mean is that new customers are not trusted initially. As customers leave more ratings, their trust level is mindlessly increased whether or not they fit with what is normal within the context of the rest of the population.
+Using a high-value for alpha, $\alpha \geqslant MAX\_RATE$, generally results in a rating that is very similar to the arithmetic mean. The only difference between this trust-based reputation system with $\alpha = 5$ and using the arithmetic mean is that new customers are not fully trusted initially. As customers leave more ratings, their trust level is mindlessly increased whether or not they fit with what is normal within the context of the rest of the population.
 While newcomers should always be distrusted\cite{reputation_systems}, it is also important to assess the actions of known customers before upgrading the level of trust they are assigned. As such, it is likely we will want to be slightly more discriminatory against users' actions than this.
 \\\\
-At the other end of the spectrum, particularly low values of $\alpha$ may not be tolerant enough to count for the natural variation of opinion. Clearly some users will be harder to impress than others so allowing reviews to differ by some amount should be expected. If the system is not tolerant enough to variation it becomes too risky for trustworthy users to post new reviews\cite{survey_and_taxonomy}, especially if their opinions go against the status quo, as the system will significantly lower their trust.
+At the other end of the spectrum, particularly low values of $\alpha$ may not be tolerant enough to account for natural variation of opinion. Clearly some users will be harder to impress than others so allowing reviews to differ by at least some small amount should be expected. If the system is not tolerant enough to variation it becomes too risky for trustworthy users to post new reviews\cite{survey_and_taxonomy} as the system is more likely to significantly lower their trust, especially if their opinions go against the status quo.
 \\\\
-It's difficult to fully assess how successful the reputation system is at it's aim of predicting the future of the customers without further data.
+It's difficult to fully assess how successful the reputation system is at it's aim of predicting the future behaviour of the customers without further data.
 
 \section{Simulated Attacks} %10 Marks
 \label{attacks}
@@ -120,8 +120,8 @@ Slander attacks of varying sizes have been simulated on product \#29, this is sh
 %Discuss the results from part (iii) of the question. Explain what value of the parameter \alpha offers the best protection against the attacks you experimented with, and assess the advantages and disadvantages of different values for \alpha.
 In Section \ref{analysis}, the advantages and disadvantages of different values of alpha were discussed with regards to normal functioning of the reputation system. Here they will be discussed with regards to the simulated attacks as described in Section \ref{attacks}.
 The plots of each attack show that the system is least susceptible to attack when an $\alpha$ value of 2 is used.
-This is the case for both self-promotion and slander attacks of \textit{all} sizes.
-It's worth analysing these results in detail before jumping to the conclusion that $\alpha = 2$ is the best value for the system.
+This is the case for both self-promotion and slander attacks of \textit{all} sizes in the test-set.
+However, it's worth analysing these results in detail before jumping to the conclusion that $\alpha = 2$ is the best value for the system.
 %but probably also less susceptible to changes in review
 \\\\
 Many good reputation systems ensure that newcomers must behave correctly for a given amount of time in order to gain a good reputation. It is important to balance this resilience to attacks with the ease of admittance for new customers.\cite{attack_defense} As discussed in Section \ref{analysis}, values of $\alpha$ that are close to \texttt{MAX\_RATE} do nothing to ensure that users behave correctly. While this will disincentivise the act of creating new accounts for attacks, they allow attackers to perform multiple attacks across a variety of products using the same account in order to increase their trust level. Obviously a compromise is needed.
